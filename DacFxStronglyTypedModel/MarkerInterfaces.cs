@@ -51,7 +51,7 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
     public sealed class UnresolvedISqlSecurableElement : TSqlModelElementReference, ISqlSecurable
     {
         public UnresolvedISqlSecurableElement(Model.ModelRelationshipInstance relationshipReference):base(relationshipReference)
-        { }
+        {  }
     }
 
     public interface ISpecifiesIndex : ISqlModelElement

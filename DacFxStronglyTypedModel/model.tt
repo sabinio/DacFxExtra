@@ -31,7 +31,6 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ assembly name="$(DacFxExternals)\Microsoft.SqlServer.Dac.Extensions.dll" #>
 <#@ import namespace="Microsoft.SqlServer.Dac.Model"#>
 <#@ output extension=".cs" #>
 <#@ include file="Utils.tt" #>

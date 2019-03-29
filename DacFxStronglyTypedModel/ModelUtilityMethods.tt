@@ -31,7 +31,6 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ assembly name="$(DacFxExternals)\Microsoft.SqlServer.Dac.Extensions.dll" #>
 <#@ import namespace="Microsoft.SqlServer.Dac.Model"#>
 <#@ output extension=".cs" #>
 <#@ include file="Utils.tt" #>
@@ -69,6 +68,7 @@ namespace <#=NamespaceName#>
 			// create the list of ModelElement classes that implement each interface.
 			foreach( var type in ModelSchema.SchemaInstance.AllTypes.OrderBy(t => t.Name))
             {
+			if (overrides.ContainsKey(type.Name)){
 				var typeOverrides = overrides[type.Name];
 				foreach(string interfaceName in typeOverrides.Interfaces)
                 {
@@ -81,8 +81,11 @@ namespace <#=NamespaceName#>
 					// Mark that instance of ModelTypeClass implement the interface
 					implementationTypes.Add(type);
                 }
-
-				
+				}
+				else
+				{
+				throw new Exception ($"Overides missing for {type.Name}");
+				}
 				// Iterate over all the SQLPlatforms and build cases statements
 				// for each SqlServerVersion but filter out any unsupported ModelElementTypes				
 				foreach(SqlServerVersion currentSQLVersion in GetSqlServerVersionValues())
@@ -154,11 +157,14 @@ namespace <#=NamespaceName#>
 <#
 			foreach( var type in ModelSchema.SchemaInstance.AllTypes)
             {
+			try{
 				var typeOverrides = overrides[type.Name];
 				if(typeOverrides.Interfaces.Count == 0)
                 {
 					continue;
                 }
+				}
+				finally{}
 #>
 			case "<#=type.Name#>":
 				if (typeof(<#=ClassNamePrefix + type.Name#>).IsAssignableFrom(type))
@@ -184,6 +190,7 @@ namespace <#=NamespaceName#>
 				}
 <#
             }
+			if (overrides.ContainsKey(type.Name)){
 			// get a list of all implemented marker interfaces
 			foreach(var interfaceType in overrides[type.Name].Interfaces)
             {
@@ -193,11 +200,13 @@ namespace <#=NamespaceName#>
 					return true;
 				}
 <#}
+}
 #>
 				// no interfaces mapped.
 				return false;
 <#
             }
+			
 #>
 			}
 			// no type mapping found 

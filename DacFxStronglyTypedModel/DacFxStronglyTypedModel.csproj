@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,7 +48,6 @@
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SqlServer.DacFx.x64.140.3745.1\lib\net46\Microsoft.SqlServer.Types.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,9 +57,19 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  <!--C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130-->
   <PropertyGroup>
-    <DacFxExternals>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130</DacFxExternals>
+    <DacFxExternals>$(MSBuildProjectDirectory)\..\packages\Microsoft.SqlServer.DacFx.x64.140.3745.1\lib\net46</DacFxExternals>
   </PropertyGroup>
+  <ItemGroup>
+    <T4ReferencePath Include="$(DacFxExternals)" />
+    <!-- Add more T4ReferencePath items here -->
+  </ItemGroup>
+  <ItemGroup>
+    <T4ParameterValues Include="DacFxExternals">
+      <Value>$(DacFxExternals)</Value>
+    </T4ParameterValues>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="ISqlModelElementReference.cs" />
     <Compile Include="TSqlModelElementReference.cs" />
@@ -91,11 +100,6 @@
     <Compile Include="MarkerInterfaces.cs" />
     <Compile Include="TSqlTypedModel.cs" />
     <Compile Include="UnresolvedElementException.cs" />
-    <Compile Include="Utils.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Utils.tt</DependentUpon>
-    </Compile>
     <Compile Include="VersionSpecificImplementations.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -116,10 +120,7 @@
       <LastGenOutput>ModelUtilityMethods.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="Utils.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Utils.cs</LastGenOutput>
-    </None>
+    <None Include="Utils.tt" />
     <None Include="VersionSpecificImplementations.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>VersionSpecificImplementations.cs</LastGenOutput>
@@ -140,6 +141,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- Optionally make the import portable across VS versions -->
+  <PropertyGroup>
+    <!-- Get the Visual Studio version: -->
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
+    <!-- Keep the next element all on one line: -->
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <!-- This is the important line: -->
+  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
+  <PropertyGroup>
+    <TransformOnBuild>true</TransformOnBuild>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

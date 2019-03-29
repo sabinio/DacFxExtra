@@ -202,6 +202,7 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
 				case "ISql100TSqlCredential":
 				case "ISql110TSqlCredential":
 				case "ISql120TSqlCredential":
+				case "ISqlAzureV12TSqlCredential":
 				case "TSqlCredential":				
 					yield return TSqlCredential.TypeClass;
 					break;
@@ -216,6 +217,10 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
 				case "ISql120TSqlDatabaseAuditSpecification":
 				case "TSqlDatabaseAuditSpecification":				
 					yield return TSqlDatabaseAuditSpecification.TypeClass;
+					break;
+				case "ISqlAzureV12TSqlDatabaseCredential":
+				case "TSqlDatabaseCredential":				
+					yield return TSqlDatabaseCredential.TypeClass;
 					break;
 				case "ISql90TSqlDatabaseDdlTrigger":
 				case "ISql100TSqlDatabaseDdlTrigger":
@@ -238,6 +243,10 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
 				case "ISql120TSqlDatabaseEventNotification":
 				case "TSqlDatabaseEventNotification":				
 					yield return TSqlDatabaseEventNotification.TypeClass;
+					break;
+				case "ISqlAzureV12TSqlDatabaseEventSession":
+				case "TSqlDatabaseEventSession":				
+					yield return TSqlDatabaseEventSession.TypeClass;
 					break;
 				case "ISql90TSqlDatabaseMirroringLanguageSpecifier":
 				case "ISql100TSqlDatabaseMirroringLanguageSpecifier":
@@ -329,24 +338,28 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
 				case "ISql100TSqlEventSessionAction":
 				case "ISql110TSqlEventSessionAction":
 				case "ISql120TSqlEventSessionAction":
+				case "ISqlAzureV12TSqlEventSessionAction":
 				case "TSqlEventSessionAction":				
 					yield return TSqlEventSessionAction.TypeClass;
 					break;
 				case "ISql100TSqlEventSessionDefinitions":
 				case "ISql110TSqlEventSessionDefinitions":
 				case "ISql120TSqlEventSessionDefinitions":
+				case "ISqlAzureV12TSqlEventSessionDefinitions":
 				case "TSqlEventSessionDefinitions":				
 					yield return TSqlEventSessionDefinitions.TypeClass;
 					break;
 				case "ISql100TSqlEventSessionSetting":
 				case "ISql110TSqlEventSessionSetting":
 				case "ISql120TSqlEventSessionSetting":
+				case "ISqlAzureV12TSqlEventSessionSetting":
 				case "TSqlEventSessionSetting":				
 					yield return TSqlEventSessionSetting.TypeClass;
 					break;
 				case "ISql100TSqlEventSessionTarget":
 				case "ISql110TSqlEventSessionTarget":
 				case "ISql120TSqlEventSessionTarget":
+				case "ISqlAzureV12TSqlEventSessionTarget":
 				case "TSqlEventSessionTarget":				
 					yield return TSqlEventSessionTarget.TypeClass;
 					break;
@@ -373,6 +386,17 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
 				case "ISqlAzureV12TSqlExtendedProperty":
 				case "TSqlExtendedProperty":				
 					yield return TSqlExtendedProperty.TypeClass;
+					break;
+				case "ISqlAzureV12TSqlExternalDataSource":
+				case "TSqlExternalDataSource":				
+					yield return TSqlExternalDataSource.TypeClass;
+					break;
+				case "TSqlExternalFileFormat":				
+					yield return TSqlExternalFileFormat.TypeClass;
+					break;
+				case "ISqlAzureV12TSqlExternalTable":
+				case "TSqlExternalTable":				
+					yield return TSqlExternalTable.TypeClass;
 					break;
 				case "ISql90TSqlFilegroup":
 				case "ISql100TSqlFilegroup":
@@ -468,6 +492,7 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
 				case "ISql100TSqlMasterKey":
 				case "ISql110TSqlMasterKey":
 				case "ISql120TSqlMasterKey":
+				case "ISqlAzureV12TSqlMasterKey":
 				case "TSqlMasterKey":				
 					yield return TSqlMasterKey.TypeClass;
 					break;
@@ -643,6 +668,14 @@ namespace Microsoft.SqlServer.Dac.Extensions.Prototype
 				case "ISql120TSqlSearchPropertyList":
 				case "TSqlSearchPropertyList":				
 					yield return TSqlSearchPropertyList.TypeClass;
+					break;
+				case "ISqlAzureV12TSqlSecurityPolicy":
+				case "TSqlSecurityPolicy":				
+					yield return TSqlSecurityPolicy.TypeClass;
+					break;
+				case "ISqlAzureV12TSqlSecurityPredicate":
+				case "TSqlSecurityPredicate":				
+					yield return TSqlSecurityPredicate.TypeClass;
 					break;
 				case "ISql110TSqlSelectiveXmlIndex":
 				case "ISql120TSqlSelectiveXmlIndex":

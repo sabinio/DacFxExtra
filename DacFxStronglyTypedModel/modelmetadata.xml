@@ -90,12 +90,17 @@
     <Property Name="Name" OverrideName="PropertyName"/>
     <Relationship Name="ClrType" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlDataTypeReference" />
   </Element>
-  <Element Name="Column">
+  
+    <Element Name="Column">
     <Implements Name="ISqlSecurable"/>
     <!-- While the DataType is modeled as ISqlDataType it is not true that all ISqlDataTypes are valid: TSqlTableTypes are not valid for columns references-->
     <Relationship Name="DataType" Specialize="False" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="ISqlDataType"  UnresolvedReturnType="UnresolvedISqlDataTypeElement" />
     <Relationship Name="ExpressionDependencies" Specialize="False" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="ISqlModelElementReference" UnresolvedReturnType="TSqlModelElementReference" />
     <Relationship Name="XmlSchemaCollection" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlXmlSchemaCollectionReference" />
+
+    <!-- this is very wrong, not sure what to put-->
+    <Relationship Name="ColumnEncryptionKey" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlXmlSchemaCollectionReference" />
+
   </Element>
   <Element Name="ColumnStoreIndex">
     <Implements Name="ISqlIndex"/>
@@ -105,6 +110,10 @@
     <Relationship Name="IndexedObject" Specialize="False" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="ISpecifiesIndex" UnresolvedReturnType="UnresolvedISpecifiesIndexElement" />
     <Relationship Name="PartitionColumn" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
     <Relationship Name="PartitionScheme" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlPartitionSchemeReference" />
+ 
+    <!--Wrong put in to compile    -->
+    <Relationship Name="BodyDependencies" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlPartitionSchemeReference" />
+
   </Element>
   <Element Name="Contract">
     <Implements Name="ISqlSecurable"/>
@@ -115,6 +124,54 @@
     <Relationship Name="CryptographicProvider" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlCryptographicProviderReference" />
   </Element>
   <Element Name="CryptographicProvider">
+  </Element>
+  <Element Name="DatabaseCredential">
+    
+  </Element>
+  <Element Name="DatabaseEventSession">
+    <Relationship Name="EventDefinitions" Specialize="False" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlModelElement" />
+    <Relationship Name="EventTargets" Specialize="False" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlModelElement" />
+
+  </Element>
+  <Element Name="ExternalDataSource">
+    <!-- Think this is right -->
+    <Relationship Name="Credential" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlCredentialReference" />
+  </Element>
+  <Element Name="ExternalFileFormat">
+  </Element>
+  <Element Name="ExternalTable">
+
+    <!-- Think this is right -->
+    <Relationship Name="Columns" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumn" />
+    <Relationship Name="DataCompressionOptions" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlDataCompressionOption" />
+    
+    <!-- Don't think this is right-->
+    <Relationship Name="DataSourceName" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
+    <Relationship Name="FileFormatName" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
+
+    <!-- think right -->
+    <Relationship Name="Filegroup" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlFilegroupReference" />
+    <Relationship Name="FileStreamFilegroup" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlFilegroupReference" />
+    <Relationship Name="FileStreamPartitionScheme" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlPartitionSchemeReference" />
+    <Relationship Name="PartitionColumn" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
+    <Relationship Name="PartitionScheme" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlPartitionSchemeReference" />
+    <Relationship Name="Schema" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlSchemaReference" />
+
+    <Relationship Name="ShardingColumn" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
+
+  </Element>
+  <Element Name="SecurityPolicy">
+    <!-- Don't think this is right-->
+    <Relationship Name="Predicates" Specialize="false" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
+    <Relationship Name="Schema" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlSchemaReference" />
+
+  </Element>
+  <Element Name="SecurityPredicate">
+
+    <!-- Don't think this is right-->
+    <Relationship Name="BodyDependencies" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlSchemaReference" />
+    <Relationship Name="TargetObject" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
+
   </Element>
   <Element Name="DatabaseAuditSpecification">
     <Relationship Name="AuditActionGroups" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlAuditActionGroup" />
@@ -145,6 +202,10 @@
     <Implements Name="ISqlSecurable"/>
     <Relationship Name="DefaultFilegroup" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlFilegroupReference" />
     <Relationship Name="DefaultFileStreamFilegroup" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlFilegroupReference" />
+
+    <!-- very wrong get to compile-->
+    <Relationship Name="GenericDatabaseScopedConfigurationOptions" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlFilegroupReference" />
+    
   </Element>
   <Element Name="DataCompressionOption">
   </Element>
@@ -184,6 +245,7 @@
   </Element>
   <Element Name="EventSession">
     <Relationship Name="EventDefinitions" Specialize="False" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlModelElement" />
+
     <Relationship Name="EventTargets" Specialize="False" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlModelElement" />
   </Element>
   <Element Name="EventSessionAction">
@@ -506,6 +568,10 @@
     <Relationship Name="PartitionColumn" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlColumnReference" />
     <Relationship Name="PartitionScheme" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlPartitionSchemeReference" />
     <Relationship Name="Schema" Specialize="True" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlSchemaReference" />
+    <!-- Not sure-->
+    <Relationship Name="TemporalSystemVersioningHistoryTable" Specialize="false" ReturnTypeNamespace="Microsoft.SqlServer.Dac.Extensions.Prototype" ReturnType="TSqlTable" />
+
+    
   </Element>
   <Element Name="TableType">
     <Implements Name="ISqlSecurable"/>
